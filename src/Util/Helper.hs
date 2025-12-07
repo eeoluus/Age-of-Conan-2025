@@ -2,6 +2,7 @@ module Util.Helper
 ( split
 , chunk
 , equals
+, io
 ) where
 
 -- note: doesn't handle trailing whitespace
@@ -19,3 +20,6 @@ chunk s size = fst partition : chunk (snd partition) size
 equals :: Eq a => [a] -> Bool
 equals (x:[]) = True
 equals (x:xs) = if x == head xs then equals xs else False 
+
+io :: Show a => FilePath -> (String -> a) -> IO ()
+io path solve = do readFile path >>= \input -> print $ solve input 
